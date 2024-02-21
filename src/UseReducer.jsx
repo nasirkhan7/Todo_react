@@ -2,30 +2,9 @@ import React, {
   useReducer,
   useState
 } from "react";
-
+import { reducer } from "./reducer";
 const UseReducer = () => {
   const [todo, setTodo] = useState()
-  const reducer = (state, action) => {
-    if (action.type === 'EMPTY'){
-    return {
-      ...state,
-      error: true,
-      message: 'Please Enter todo'
-    }
-  }
-    if (action.type === 'REMOVE_MESSAGE'){
-      return {
-        ...state,
-        message: '',
-        error: false,
-        success: false
-      }
-  }
-  return {
-    ...state
-  }
-}
-
   const initialState = {
     todos: [],
     error: false,
@@ -38,12 +17,14 @@ const UseReducer = () => {
       dispatch({
         type: 'EMPTY'
       })
+    } else{
+      dispatch({type:"ADD_TODO", payload:todo})
     }
     setTimeout(() => {
       dispatch({
         type: 'REMOVE_MESSAGE'
       })
-    }, 3000)
+    }, 2000)
 
   }
 
@@ -62,6 +43,8 @@ const UseReducer = () => {
     }
     /> 
     {state.error && <p className="text-danger fw-bold">
+      {state.message}</p>}
+    {state.success && <p className="text-success fw-bold">
       {state.message}</p>}
     <button onClick = {
       handleClick} className = "btn btn-success w-100 my-2" > Add </button> </form> 
